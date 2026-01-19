@@ -145,6 +145,32 @@
         margin-top: 40px;
       }
     }
+
+    #soilCanvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    .orbit-label {
+      position: absolute;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      font-size: 0.9rem;
+      color: #e5e7eb;
+      cursor: pointer;
+      white-space: nowrap;
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s, opacity 0.2s;
+      transform: translate(-50%, -50%);
+    }
+
+    .orbit-label:hover {
+      background: rgba(255,255,255,0.18);
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+
   </style>
 </head>
 <body>
@@ -162,13 +188,22 @@
       </div>
 
       <div class="core-wrapper" id="coreWrapper">
-        <div class="core" id="core"></div>
+        <canvas id="soilCanvas"></canvas>
 
-        <div class="option opt-web" onclick="location.href='web.html'">Web Applications</div>
-        <div class="option opt-mobile" onclick="location.href='mobile.html'">Mobile Applications</div>
-        <div class="option opt-windows" onclick="location.href='windows.html'">Windows Applications</div>
-        <div class="option opt-ai" onclick="location.href='ai.html'">AI Assistants</div>
+        <div class="orbit-label" data-angle="0" onclick="location.href='web.html'">
+          Web Applications
+        </div>
+        <div class="orbit-label" data-angle="90" onclick="location.href='mobile.html'">
+          Mobile Applications
+        </div>
+        <div class="orbit-label" data-angle="180" onclick="location.href='windows.html'">
+          Windows Applications
+        </div>
+        <div class="orbit-label" data-angle="270" onclick="location.href='ai.html'">
+          AI Assistants
+        </div>
       </div>
+
 
     </div>
   </section>
@@ -225,15 +260,33 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 20px;
+        gap: 22px;
       ">
-        <a href="#" target="_blank" class="contact-link">Instagram</a>
-        <a href="#" target="_blank" class="contact-link">YouTube</a>
-        <a href="#" target="_blank" class="contact-link">GitHub</a>
-        <a href="#" target="_blank" class="contact-link">LinkedIn</a>
-        <a href="#" target="_blank" class="contact-link">Fiverr</a>
-        <a href="mailto:yourmail@gmail.com" class="contact-link">Email</a>
+        <a href="#" class="contact-icon" aria-label="Instagram">
+          <img src="https://cdn.jsdelivr.net/npm/lucide-static/icons/instagram.svg" />
+        </a>
+
+        <a href="#" class="contact-icon" aria-label="YouTube">
+          <img src="https://cdn.jsdelivr.net/npm/lucide-static/icons/youtube.svg" />
+        </a>
+
+        <a href="#" class="contact-icon" aria-label="GitHub">
+          <img src="https://cdn.jsdelivr.net/npm/lucide-static/icons/github.svg" />
+        </a>
+
+        <a href="#" class="contact-icon" aria-label="LinkedIn">
+          <img src="https://cdn.jsdelivr.net/npm/lucide-static/icons/linkedin.svg" />
+        </a>
+
+        <a href="#" class="contact-icon" aria-label="Fiverr">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/fiverr.svg" />
+        </a>
+
+        <a href="mailto:yourmail@gmail.com" class="contact-icon" aria-label="Email">
+          <img src="https://cdn.jsdelivr.net/npm/lucide-static/icons/mail.svg" />
+        </a>
       </div>
+
     </div>
   </section>
 
@@ -255,6 +308,150 @@
       transform: translateY(-3px);
     }
   </style>
+
+<style>
+  .contact-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+  }
+
+  .contact-icon img {
+    width: 22px;
+    height: 22px;
+    filter: invert(1);
+    opacity: 0.85;
+  }
+
+  .contact-icon:hover {
+    transform: translateY(-4px) scale(1.05);
+    background: rgba(255,255,255,0.15);
+  }
+</style>
+
+<script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+<script>
+  const canvas = document.getElementById("soilCanvas");
+  const wrapper = document.getElementById("coreWrapper");
+  const labels = document.querySelectorAll(".orbit-label");
+
+  // Scene
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.z = 4;
+
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    alpha: true,
+    antialias: true
+  });
+
+  function resize() {
+    const size = wrapper.offsetWidth;
+    renderer.setSize(size, size);
+    camera.aspect = 1;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener("resize", resize);
+
+  // Soil Core Sphere
+  const geometry = new THREE.SphereGeometry(1.2, 64, 64);
+  const material = new THREE.MeshStandardMaterial({
+    color: 0x1f2937,
+    roughness: 0.9,
+    metalness: 0.05
+  });
+  const sphere = new THREE.Mesh(geometry, material);
+  scene.add(sphere);
+
+  // Lights
+  scene.add(new THREE.AmbientLight(0x4ade80, 0.4));
+  const light = new THREE.PointLight(0x60a5fa, 1);
+  light.position.set(3, 3, 3);
+  scene.add(light);
+
+  // Rotation
+  let autoRotate = true;
+  let rotationY = 0;
+
+  let isDragging = false;
+  let lastX = 0;
+
+  wrapper.addEventListener("mousedown", e => {
+    isDragging = true;
+    autoRotate = false;
+    lastX = e.clientX;
+  });
+
+  window.addEventListener("mouseup", () => {
+    isDragging = false;
+    autoRotate = true;
+  });
+
+  window.addEventListener("mousemove", e => {
+    if (!isDragging) return;
+    const delta = e.clientX - lastX;
+    rotationY += delta * 0.005;
+    lastX = e.clientX;
+  });
+
+  // Touch support
+  wrapper.addEventListener("touchstart", e => {
+    isDragging = true;
+    autoRotate = false;
+    lastX = e.touches[0].clientX;
+  });
+
+  wrapper.addEventListener("touchend", () => {
+    isDragging = false;
+    autoRotate = true;
+  });
+
+  wrapper.addEventListener("touchmove", e => {
+    if (!isDragging) return;
+    const delta = e.touches[0].clientX - lastX;
+    rotationY += delta * 0.005;
+    lastX = e.touches[0].clientX;
+  });
+
+  // Animate
+  function animate() {
+    requestAnimationFrame(animate);
+
+    if (autoRotate) rotationY += 0.002;
+
+    sphere.rotation.y = rotationY;
+
+    // Position labels in 3D ring
+    labels.forEach(label => {
+      const angle = (Number(label.dataset.angle) * Math.PI) / 180 + rotationY;
+      const radius = 2;
+
+      const x = Math.sin(angle) * radius;
+      const z = Math.cos(angle) * radius;
+
+      const scale = (z + radius) / (2 * radius);
+      const screenX = (x / 4 + 0.5) * wrapper.offsetWidth;
+      const screenY = wrapper.offsetHeight / 2;
+
+      label.style.left = `${screenX}px`;
+      label.style.top = `${screenY}px`;
+      label.style.opacity = 0.4 + scale * 0.6;
+      label.style.zIndex = Math.floor(scale * 100);
+    });
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+</script>
 
 </body>
 </html>
