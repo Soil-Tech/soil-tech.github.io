@@ -3,134 +3,192 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>soil.tech | Building Software Solutions</title>
+  <title>soil.tech</title>
 
-  <meta name="description" content="soil.tech builds websites, AI tools, applications, and custom software projects for businesses and college students." />
+  <meta name="description" content="Plant your project, grow your career. soil.tech builds web, mobile, software, and AI solutions." />
 
   <style>
+    :root {
+      --bg: #0b0f14;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --green: #4ade80;
+      --blue: #60a5fa;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: Inter, Arial, sans-serif;
-      background: #f7f9f8;
-      color: #1f2933;
+      font-family: Inter, system-ui, sans-serif;
+      background: radial-gradient(circle at top, #111827, #020617);
+      color: var(--text);
+      overflow-x: hidden;
     }
 
-    header {
-      padding: 80px 20px;
-      text-align: center;
-      background: linear-gradient(135deg, #2f7d5a, #2563eb);
-      color: white;
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
     }
 
-    header h1 {
+    .hero-container {
+      max-width: 1100px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    /* TEXT */
+    .hero-text h1 {
       font-size: 3rem;
       margin-bottom: 10px;
     }
 
-    header p {
-      font-size: 1.2rem;
-      max-width: 700px;
-      margin: auto;
-      opacity: 0.95;
+    .hero-text p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 480px;
     }
 
-    .btn {
-      display: inline-block;
+    .tagline {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      color: var(--green);
+      font-weight: 500;
+    }
+
+    .cta {
       margin-top: 30px;
+      display: inline-block;
       padding: 14px 28px;
-      background: white;
-      color: #2563eb;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--green), var(--blue));
+      color: #020617;
       text-decoration: none;
       font-weight: 600;
-      border-radius: 30px;
       transition: transform 0.2s;
     }
 
-    .btn:hover {
+    .cta:hover {
       transform: translateY(-3px);
     }
 
-    section {
-      padding: 60px 20px;
-      max-width: 1100px;
+    .price-note {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* CORE */
+    .core-wrapper {
+      position: relative;
+      width: 320px;
+      height: 320px;
       margin: auto;
     }
 
-    .services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+    .core {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 30%, #4ade80, transparent 60%),
+        radial-gradient(circle at 70% 70%, #60a5fa, transparent 60%),
+        linear-gradient(135deg, #1f2937, #020617);
+      box-shadow:
+        inset 0 0 40px rgba(0,0,0,0.8),
+        0 0 60px rgba(74,222,128,0.15);
+      position: relative;
+      transition: transform 0.1s ease-out;
     }
 
-    .card {
-      background: white;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-      text-align: center;
+    /* OPTIONS */
+    .option {
+      position: absolute;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.9rem;
+      color: var(--text);
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: all 0.2s;
     }
 
-    .price {
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-top: 40px;
+    .option:hover {
+      background: rgba(255,255,255,0.15);
+      transform: scale(1.05);
     }
 
-    footer {
-      background: #111827;
-      color: #9ca3af;
-      text-align: center;
-      padding: 40px 20px;
-      margin-top: 60px;
-    }
+    .opt-web { top: -10px; left: 50%; transform: translateX(-50%); }
+    .opt-mobile { right: -20px; top: 50%; transform: translateY(-50%); }
+    .opt-windows { bottom: -10px; left: 50%; transform: translateX(-50%); }
+    .opt-ai { left: -20px; top: 50%; transform: translateY(-50%); }
 
-    footer a {
-      color: #60a5fa;
-      text-decoration: none;
-      margin: 0 10px;
+    /* MOBILE */
+    @media (max-width: 900px) {
+      .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .core-wrapper {
+        margin-top: 40px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>soil.tech</h1>
-    <p>
-      We build reliable software solutions for businesses and college students —
-      from websites and AI assistants to custom applications.
-    </p>
-    <a href="projects.html" class="btn">View Our Projects</a>
-  </header>
+  <section class="hero">
+    <div class="hero-container">
 
-  <section>
-    <h2 style="text-align:center;">What We Build</h2>
+      <div class="hero-text">
+        <h1>soil.tech</h1>
+        <p>We build practical software solutions for businesses and students.</p>
+        <div class="tagline">Plant your project, grow your career.</div>
 
-    <div class="services">
-      <div class="card">🌐 Websites</div>
-      <div class="card">🤖 AI Assistants</div>
-      <div class="card">🖥 Software Applications</div>
-      <div class="card">📱 Mobile Apps</div>
-      <div class="card">🎓 College Projects</div>
+        <a href="#projects" class="cta">Explore our work</a>
+        <div class="price-note">Projects start from ₹499*</div>
+      </div>
+
+      <div class="core-wrapper" id="coreWrapper">
+        <div class="core" id="core"></div>
+
+        <div class="option opt-web" onclick="location.href='web.html'">Web Applications</div>
+        <div class="option opt-mobile" onclick="location.href='mobile.html'">Mobile Applications</div>
+        <div class="option opt-windows" onclick="location.href='windows.html'">Windows Applications</div>
+        <div class="option opt-ai" onclick="location.href='ai.html'">AI Assistants</div>
+      </div>
+
     </div>
-
-    <p class="price">
-      Project pricing starts from just <strong>₹499/-</strong><br />
-      <span style="font-weight:400; font-size:0.95rem;">
-        Final cost depends on features, complexity, and timeline.
-      </span>
-    </p>
   </section>
 
-  <footer>
-    <p>Connect with us</p>
-    <a href="#" target="_blank">Instagram</a>
-    <a href="#" target="_blank">LinkedIn</a>
-    <a href="#" target="_blank">GitHub</a>
-    <a href="mailto:yourmail@gmail.com">Email</a>
+  <script>
+    // Subtle mouse parallax (desktop only)
+    const core = document.getElementById("core");
+    const wrapper = document.getElementById("coreWrapper");
 
-    <p style="margin-top:20px;">© 2026 soil.tech</p>
-  </footer>
+    wrapper.addEventListener("mousemove", (e) => {
+      const rect = wrapper.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      core.style.transform = `rotateX(${ -y / 20 }deg) rotateY(${ x / 20 }deg)`;
+    });
+
+    wrapper.addEventListener("mouseleave", () => {
+      core.style.transform = "rotateX(0deg) rotateY(0deg)";
+    });
+  </script>
 
 </body>
 </html>
