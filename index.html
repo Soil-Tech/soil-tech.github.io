@@ -171,9 +171,61 @@
       transform: translate(-50%, -50%) scale(1.05);
     }
 
+    .bg-blobs {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.blob {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  filter: blur(120px);
+  opacity: 0.45;
+  border-radius: 50%;
+  animation: float 18s infinite alternate ease-in-out;
+}
+
+.blob.green {
+  background: #4ade80;
+  top: 10%;
+  left: 10%;
+}
+
+.blob.blue {
+  background: #60a5fa;
+  bottom: 15%;
+  right: 15%;
+  animation-duration: 22s;
+}
+
+.blob.purple {
+  background: #a78bfa;
+  top: 40%;
+  right: 35%;
+  animation-duration: 26s;
+}
+
+@keyframes float {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(120px, -80px);
+  }
+}
+
   </style>
 </head>
 <body>
+  <div class="bg-blobs">
+  <span class="blob green"></span>
+  <span class="blob blue"></span>
+  <span class="blob purple"></span>
+</div>
+
 
   <section class="hero">
     <div class="hero-container">
@@ -183,8 +235,18 @@
         <p>We build practical software solutions for businesses and students.</p>
         <div class="tagline">Plant your project, grow your career.</div>
 
-        <a href="#projects" class="cta">Explore our work</a>
         <div class="price-note">Projects start from ₹499*</div>
+        <a href="reviews.html" style="
+          display: inline-block;
+          margin-top: 18px;
+          font-size: 0.95rem;
+          color: #9ca3af;
+          text-decoration: none;
+          border-bottom: 1px dashed #4ade80;
+        ">
+          See client reviews →
+        </a>
+
       </div>
 
       <div class="core-wrapper" id="coreWrapper">
@@ -207,23 +269,6 @@
 
     </div>
   </section>
-
-  <script>
-    // Subtle mouse parallax (desktop only)
-    const core = document.getElementById("core");
-    const wrapper = document.getElementById("coreWrapper");
-
-    wrapper.addEventListener("mousemove", (e) => {
-      const rect = wrapper.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      core.style.transform = `rotateX(${ -y / 20 }deg) rotateY(${ x / 20 }deg)`;
-    });
-
-    wrapper.addEventListener("mouseleave", () => {
-      core.style.transform = "rotateX(0deg) rotateY(0deg)";
-    });
-  </script>
 
   <!-- ABOUT US -->
   <section style="padding: 100px 20px; background: #020617;">
@@ -309,149 +354,224 @@
     }
   </style>
 
-<style>
-  .contact-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.25s ease;
-  }
+  <style>
+    .contact-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+    }
 
-  .contact-icon img {
-    width: 22px;
-    height: 22px;
-    filter: invert(1);
-    opacity: 0.85;
-  }
+    .contact-icon img {
+      width: 22px;
+      height: 22px;
+      filter: invert(1);
+      opacity: 0.85;
+    }
 
-  .contact-icon:hover {
-    transform: translateY(-4px) scale(1.05);
-    background: rgba(255,255,255,0.15);
-  }
-</style>
+    .contact-icon:hover {
+      transform: translateY(-4px) scale(1.05);
+      background: rgba(255,255,255,0.15);
+    }
+  </style>
 
-<script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
-<script>
-  const canvas = document.getElementById("soilCanvas");
-  const wrapper = document.getElementById("coreWrapper");
-  const labels = document.querySelectorAll(".orbit-label");
+  <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+  <script>
+    const canvas = document.getElementById("soilCanvas");
+    const wrapper = document.getElementById("coreWrapper");
+    const labels = document.querySelectorAll(".orbit-label");
 
-  // Scene
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-  camera.position.z = 4;
+    // Scene
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    camera.position.z = 4;
 
-  const renderer = new THREE.WebGLRenderer({
-    canvas,
-    alpha: true,
-    antialias: true
-  });
-
-  function resize() {
-    const size = wrapper.offsetWidth;
-    renderer.setSize(size, size);
-    camera.aspect = 1;
-    camera.updateProjectionMatrix();
-  }
-  resize();
-  window.addEventListener("resize", resize);
-
-  // Soil Core Sphere
-  const geometry = new THREE.SphereGeometry(1.2, 64, 64);
-  const material = new THREE.MeshStandardMaterial({
-    color: 0x1f2937,
-    roughness: 0.9,
-    metalness: 0.05
-  });
-  const sphere = new THREE.Mesh(geometry, material);
-  scene.add(sphere);
-
-  // Lights
-  scene.add(new THREE.AmbientLight(0x4ade80, 0.4));
-  const light = new THREE.PointLight(0x60a5fa, 1);
-  light.position.set(3, 3, 3);
-  scene.add(light);
-
-  // Rotation
-  let autoRotate = true;
-  let rotationY = 0;
-
-  let isDragging = false;
-  let lastX = 0;
-
-  wrapper.addEventListener("mousedown", e => {
-    isDragging = true;
-    autoRotate = false;
-    lastX = e.clientX;
-  });
-
-  window.addEventListener("mouseup", () => {
-    isDragging = false;
-    autoRotate = true;
-  });
-
-  window.addEventListener("mousemove", e => {
-    if (!isDragging) return;
-    const delta = e.clientX - lastX;
-    rotationY += delta * 0.005;
-    lastX = e.clientX;
-  });
-
-  // Touch support
-  wrapper.addEventListener("touchstart", e => {
-    isDragging = true;
-    autoRotate = false;
-    lastX = e.touches[0].clientX;
-  });
-
-  wrapper.addEventListener("touchend", () => {
-    isDragging = false;
-    autoRotate = true;
-  });
-
-  wrapper.addEventListener("touchmove", e => {
-    if (!isDragging) return;
-    const delta = e.touches[0].clientX - lastX;
-    rotationY += delta * 0.005;
-    lastX = e.touches[0].clientX;
-  });
-
-  // Animate
-  function animate() {
-    requestAnimationFrame(animate);
-
-    if (autoRotate) rotationY += 0.002;
-
-    sphere.rotation.y = rotationY;
-
-    // Position labels in 3D ring
-    labels.forEach(label => {
-      const angle = (Number(label.dataset.angle) * Math.PI) / 180 + rotationY;
-      const radius = 2;
-
-      const x = Math.sin(angle) * radius;
-      const z = Math.cos(angle) * radius;
-
-      const scale = (z + radius) / (2 * radius);
-      const screenX = (x / 4 + 0.5) * wrapper.offsetWidth;
-      const screenY = wrapper.offsetHeight / 2;
-
-      label.style.left = `${screenX}px`;
-      label.style.top = `${screenY}px`;
-      label.style.opacity = 0.4 + scale * 0.6;
-      label.style.zIndex = Math.floor(scale * 100);
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true
     });
 
-    renderer.render(scene, camera);
-  }
+    function resize() {
+      const size = wrapper.offsetWidth;
+      renderer.setSize(size, size);
+      camera.aspect = 1;
+      camera.updateProjectionMatrix();
+    }
+    resize();
+    window.addEventListener("resize", resize);
 
-  animate();
-</script>
+    // Soil Core Sphere
+    const geometry = new THREE.SphereGeometry(1.2, 96, 96);
+
+const material = new THREE.MeshStandardMaterial({
+  color: 0x2f2a24,   // base soil brown
+  roughness: 1,
+  metalness: 0,
+  vertexColors: true
+});
+
+
+// Fake soil grain using vertex displacement
+const position = geometry.attributes.position;
+for (let i = 0; i < position.count; i++) {
+  const x = position.getX(i);
+  const y = position.getY(i);
+  const z = position.getZ(i);
+
+  const noise =
+    Math.sin(x * 6) * 0.02 +
+    Math.sin(y * 7) * 0.02 +
+    Math.sin(z * 8) * 0.02;
+
+  position.setXYZ(
+    i,
+    x + x * noise,
+    y + y * noise,
+    z + z * noise
+  );
+}
+const colors = [];
+for (let i = 0; i < position.count; i++) {
+  const y = position.getY(i);
+
+  // Soil color gradient (darker bottom, lighter top)
+  const base = new THREE.Color(0x2f2a24);
+  const tint = new THREE.Color(0x3b5d3a); // hint of green life
+
+  const mix = (y + 1.2) / 2.4; // normalize height
+  base.lerp(tint, mix * 0.25);
+
+  colors.push(base.r, base.g, base.b);
+}
+
+geometry.setAttribute(
+  "color",
+  new THREE.Float32BufferAttribute(colors, 3)
+);
+
+geometry.computeVertexNormals();
+
+const sphere = new THREE.Mesh(geometry, material);
+scene.add(sphere);
+
+
+    // Lights
+    scene.add(new THREE.AmbientLight(0xffffff, 0.25));
+
+    const keyLight = new THREE.DirectionalLight(0x4ade80, 1.2);
+    keyLight.position.set(3, 2, 4);
+    scene.add(keyLight);
+
+    const rimLight = new THREE.DirectionalLight(0x60a5fa, 0.8);
+    rimLight.position.set(-3, 1, -4);
+    scene.add(rimLight);
+
+
+    // Rotation
+    let autoRotate = true;
+    let rotationY = 0;
+
+    let isDragging = false;
+    let lastX = 0;
+
+    wrapper.addEventListener("mousedown", e => {
+      isDragging = true;
+      autoRotate = false;
+      lastX = e.clientX;
+    });
+
+    window.addEventListener("mouseup", () => {
+      isDragging = false;
+      autoRotate = true;
+    });
+
+    window.addEventListener("mousemove", e => {
+      if (!isDragging) return;
+      const delta = e.clientX - lastX;
+      rotationY += delta * 0.005;
+      lastX = e.clientX;
+    });
+
+    // Touch support
+    wrapper.addEventListener("touchstart", e => {
+      isDragging = true;
+      autoRotate = false;
+      lastX = e.touches[0].clientX;
+    });
+
+    wrapper.addEventListener("touchend", () => {
+      isDragging = false;
+      autoRotate = true;
+    });
+
+    wrapper.addEventListener("touchmove", e => {
+      if (!isDragging) return;
+      const delta = e.touches[0].clientX - lastX;
+      rotationY += delta * 0.005;
+      lastX = e.touches[0].clientX;
+    });
+
+    // Animate
+    function animate() {
+      requestAnimationFrame(animate);
+
+      if (autoRotate) rotationY += 0.0007;
+
+      sphere.rotation.y = rotationY;
+      sphere.rotation.x = Math.sin(rotationY * 0.5) * 0.08;
+
+
+      // Position labels in 3D ring
+      labels.forEach(label => {
+        const angle = (Number(label.dataset.angle) * Math.PI) / 180 + rotationY;
+        const radius = 2;
+
+        const x = Math.sin(angle) * radius;
+        const z = Math.cos(angle) * radius;
+
+        const depth = (z + radius) / (2 * radius);
+
+        const screenX = (x / 4 + 0.5) * wrapper.offsetWidth;
+        const screenY = wrapper.offsetHeight / 2;
+
+        label.style.left = `${screenX}px`;
+        label.style.top = `${screenY}px`;
+
+        // Hide labels behind the sphere
+        // Depth-based visibility (show 3, hide 1)
+if (z < -0.6) {
+  // Fully behind
+  label.style.opacity = 0;
+  label.style.pointerEvents = "none";
+  label.style.transform = "translate(-50%, -50%) scale(0.85)";
+} else if (z < 0) {
+  // Side labels (partially visible)
+  label.style.opacity = 0.25;
+  label.style.pointerEvents = "auto";
+  label.style.transform = "translate(-50%, -50%) scale(0.9)";
+} else {
+  // Front label
+  label.style.opacity = 0.6 + depth * 0.4;
+  label.style.pointerEvents = "auto";
+  label.style.transform = "translate(-50%, -50%) scale(1)";
+}
+
+
+        label.style.zIndex = Math.floor(depth * 100);
+
+      });
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
 
 </body>
 </html>
