@@ -90,8 +90,8 @@
     /* CORE */
     .core-wrapper {
       position: relative;
-      width: 320px;
-      height: 320px;
+      width: 420px;
+      height: 420px;
       margin: auto;
     }
 
@@ -407,14 +407,19 @@
     window.addEventListener("resize", resize);
 
     // Soil Core Sphere
-    const geometry = new THREE.SphereGeometry(1.2, 96, 96);
+    const geometry = new THREE.SphereGeometry(1.6, 96, 96);
 
 const material = new THREE.MeshStandardMaterial({
-  color: 0x2f2a24,   // base soil brown
-  roughness: 1,
-  metalness: 0,
-  vertexColors: true
+  color: 0x3a2f24,           // warmer soil brown
+  roughness: 0.9,            // slightly less rough → reflects light
+  metalness: 0.05,
+  vertexColors: true,
+
+  // subtle life glow (VERY IMPORTANT)
+  emissive: new THREE.Color(0x1f3d2b),
+  emissiveIntensity: 0.35
 });
+
 
 
 // Fake soil grain using vertex displacement
@@ -464,11 +469,11 @@ scene.add(sphere);
     // Lights
     scene.add(new THREE.AmbientLight(0xffffff, 0.25));
 
-    const keyLight = new THREE.DirectionalLight(0x4ade80, 1.2);
+    const keyLight = new THREE.DirectionalLight(0x4ade80, 1.6);
     keyLight.position.set(3, 2, 4);
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0x60a5fa, 0.8);
+    const rimLight = new THREE.DirectionalLight(0x60a5fa, 1.1);
     rimLight.position.set(-3, 1, -4);
     scene.add(rimLight);
 
