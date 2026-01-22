@@ -195,6 +195,50 @@
   color: #22c55e;
 }
 
+/* HERO */
+.hero {
+  background: #ffffff;
+  padding: 100px 24px 60px;
+}
+
+.hero-container {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  color: #111827;
+  margin-bottom: 12px;
+}
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: #374151;
+  max-width: 460px;
+}
+
+.hero-tagline {
+  margin-top: 14px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #22c55e;
+}
+
+.hero-price {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 480px;
+}
 
 
 /* Push page content below navbar */
@@ -940,6 +984,31 @@ if (z < -0.6) {
 
 
 </script>
+
+<section class="hero">
+  <div class="hero-container">
+
+    <!-- Left content -->
+    <div class="hero-text">
+      <h1>soil.tech</h1>
+      <p class="hero-desc">
+        We build practical software solutions for college students and businesses.
+      </p>
+      <p class="hero-tagline">
+        Plant your project, grow your career.
+      </p>
+      <p class="hero-price">
+        Projects start from ₹499*
+      </p>
+    </div>
+
+    <!-- Right image -->
+    <div class="hero-image">
+      <img src="hero.png" alt="soil.tech illustration">
+    </div>
+
+  </div>
+</section>
 
 
 </body>
