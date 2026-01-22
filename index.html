@@ -20,6 +20,188 @@
       box-sizing: border-box;
     }
 
+.logo img {
+  height: 36px;
+  width: auto;
+}
+
+/* MODAL OVERLAY */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+/* MODAL BOX */
+.modal-box {
+  background: #ffffff;
+  width: 90%;
+  max-width: 720px;
+  border-radius: 16px;
+  padding: 32px;
+  position: relative;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.close-btn:hover {
+  color: #111827;
+}
+
+/* Modal text */
+.modal-title {
+  text-align: center;
+  font-size: 1.6rem;
+  color: #111827;
+}
+
+.modal-subtitle {
+  text-align: center;
+  color: #6b7280;
+  margin: 8px 0 28px;
+}
+
+/* Pricing cards */
+.pricing-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.price-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 24px;
+  text-align: center;
+}
+
+.price-card h3 {
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.price {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #22c55e;
+  margin-bottom: 8px;
+}
+
+.desc {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+/* Highlight business */
+.price-card.featured {
+  border: 2px solid #22c55e;
+  background: #f0fdf4;
+}
+
+/* NAVBAR */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  z-index: 1000;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #111827;
+}
+.logo span {
+  color: #22c55e; /* soil green */
+}
+
+/* Links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.nav-links a,
+.nav-btn {
+  background: none;
+  border: none;
+  font-size: 0.95rem;
+  color: #374151;
+  cursor: pointer;
+  padding: 6px 4px;
+}
+
+.nav-links a:hover,
+.nav-btn:hover {
+  color: #22c55e;
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 140%;
+  left: 0;
+  background: #ffffff;
+  min-width: 200px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  border: 1px solid #e5e7eb;
+  padding: 8px 0;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.dropdown-menu a:hover {
+  background: #f9fafb;
+  color: #22c55e;
+}
+
+
+
+/* Push page content below navbar */
+body {
+  padding-top: 72px;
+}
+
     body {
       margin: 0;
       font-family: Inter, system-ui, sans-serif;
@@ -245,6 +427,70 @@
   <span class="blob blue"></span>
   <span class="blob purple"></span>
 </div>
+
+<header class="navbar">
+  <div class="nav-container">
+    <!-- Logo -->
+   <div class="logo">
+  <img src="logo.png" alt="soil.tech logo">
+</div>
+
+
+    <!-- Navigation -->
+    <nav class="nav-links">
+      <a href="#about">About</a>
+
+      <!-- Pricing -->
+      <div class="nav-item">
+        <button class="nav-btn" onclick="openPricing()">Pricing</button>
+      </div>
+
+      <!-- Projects -->
+      <div class="nav-item dropdown">
+        <button class="nav-btn dropdown-toggle">Projects ▾</button>
+
+        <div class="dropdown-menu">
+          <a href="#">Web Applications</a>
+          <a href="#">Windows Applications</a>
+          <a href="#">Mobile Applications</a>
+          <a href="#">AI Tools</a>
+        </div>
+      </div>
+
+      <!-- Languages -->
+      <div class="nav-item dropdown">
+        <button class="nav-btn dropdown-toggle">Languages ▾</button>
+
+        <div class="dropdown-menu">
+          <a href="#">HTML / CSS / JS</a>
+          <a href="#">React.js</a>
+          <a href="#">Node.js</a>
+          <a href="#">Python</a>
+          <a href="#">Java</a>
+          <a href="#">Flutter / Dart</a>
+          <a href="#">C / C++</a>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="nav-item dropdown">
+        <button class="nav-btn dropdown-toggle">Contacts ▾</button>
+
+        <div class="dropdown-menu">
+          <a href="#">Gmail</a>
+          <a href="#">Instagram</a>
+          <a href="#">YouTube</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">Fiverr</a>
+          <a href="#">GitHub</a>
+        </div>
+      </div>
+
+      <a href="reviews.html">Reviews</a>
+    </nav>
+  </div>
+</header>
+
 
 
   <section class="hero">
@@ -613,6 +859,87 @@ if (z < -0.6) {
 
     animate();
   </script>
+
+  <script>
+  function openPricing() {
+    document.getElementById("pricingModal").style.display = "flex";
+  }
+
+  function closePricing() {
+    document.getElementById("pricingModal").style.display = "none";
+  }
+
+  // Close modal when clicking outside box
+  document.getElementById("pricingModal").addEventListener("click", e => {
+    if (e.target.id === "pricingModal") {
+      closePricing();
+    }
+  });
+</script>
+
+  <script>
+  
+  <!-- PRICING MODAL -->
+<div id="pricingModal" class="modal-overlay">
+  <div class="modal-box">
+    <button class="close-btn" onclick="closePricing()">×</button>
+
+    <h2 class="modal-title">Pricing</h2>
+    <p class="modal-subtitle">
+      Simple & transparent pricing for everyone
+    </p>
+
+    <div class="pricing-cards">
+      // -- College Card --
+      <div class="price-card">
+        <h3>College Projects</h3>
+        <p class="price">₹499+</p>
+        <p class="desc">
+          Perfect for students, final year projects, demos & learning.
+        </p>
+      </div>
+
+      // -- Business Card --
+      <div class="price-card featured">
+        <h3>Business Projects</h3>
+        <p class="price">₹4999+</p>
+        <p class="desc">
+          Professional software solutions for startups & businesses.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  // Dropdown toggle
+  document.querySelectorAll(".dropdown-toggle").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+
+      const menu = btn.nextElementSibling;
+
+      // Close other dropdowns
+      document.querySelectorAll(".dropdown-menu").forEach(d => {
+        if (d !== menu) d.style.display = "none";
+      });
+
+      // Toggle current
+      menu.style.display =
+        menu.style.display === "block" ? "none" : "block";
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener("click", () => {
+    document.querySelectorAll(".dropdown-menu").forEach(menu => {
+      menu.style.display = "none";
+    });
+  });
+
+
+
+</script>
+
 
 </body>
 </html>
